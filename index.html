@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إتقان للخدمات العقارية والإدارية</title>
+    <!-- FontAwesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <!-- Three.js for 3D Globe -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root {
+            --primary-blue: #0E2238;
+            --primary-blue-light: #183352;
+            --accent-gold: #D4AF37;
+            --accent-gold-light: #F3E5AB;
+            --bg-light: #F4F7FA;
+            --text-dark: #1E293B;
+            --text-muted: #64748B;
+            --white: #FFFFFF;
+            --card-shadow: 0 10px 30px rgba(14, 34, 56, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header / Navbar */
+        header {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border-bottom: 2px solid var(--accent-gold);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-badge {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--accent-gold), #B8860B);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            font-weight: 900;
+            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .brand-text h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: 0.5px;
+        }
+
+        .brand-text span {
+            font-size: 0.8rem;
+            color: var(--accent-gold);
+            display: block;
+            margin-top: -4px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-gold);
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+            color: var(--white);
+            padding: 4rem 5%;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--accent-gold);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #CBD5E1;
+            margin-bottom: 2rem;
+        }
+
+        /* Section Title */
+        .section-header {
+            text-align: center;
+            margin: 3rem 0 2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--primary-blue);
+            font-weight: 800;
+            display: inline-block;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50%;
+            height: 3px;
+            background: var(--accent-gold);
+            margin: 8px auto 0;
+            border-radius: 2px;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem 4rem;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(14, 34, 56, 0.12);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--primary-blue);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            color: var(--primary-blue);
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .card-text {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 700;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #1EBE5D;
+        }
+
+        /* Special Visual Container */
+        .visual-box {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        #globe-container {
+            width: 100%;
+            height: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: radial-gradient(circle, #183352 0%, #0E2238 100%);
+        }
+
+        /* Office Animation */
+        .office-demo {
+            height: 250px;
+            background: #F8FAFC;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border: 2px dashed #E2E8F0;
+        }
+
+        .stamp-badge {
+            border: 4px solid #16A34A;
+            color: #16A34A;
+            padding: 10px 20px;
+            font-weight: 900;
+            font-size: 1.8rem;
+            border-radius: 8px;
+            text-transform: uppercase;
+            transform: rotate(-15deg) scale(0);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+        }
+
+        .stamp-badge.active {
+            transform: rotate(-15deg) scale(1);
+            opacity: 1;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 5%;
+            margin-top: 4rem;
+            border-top: 3px solid var(--accent-gold);
+        }
+
+        .footer-text {
+            color: #94A3B8;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .hero h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo-container">
+                <div class="logo-badge">إ</div>
+                <div class="brand-text">
+                    <h1>إتقان</h1>
+                    <span>للخدمات العقارية والإدارية</span>
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#lands">خدمات الأراضي</a></li>
+                <li><a href="#non-jordanian">موافقة التملك</a></li>
+                <li><a href="#licenses">رخص المهن</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>إتقان لخدمات الأراضي ورخص المهن</h2>
+            <p>حلول عقارية وإدارية متكاملة بخبرة واحترافية عالية في الأردن</p>
+        </div>
+    </section>
+
+    <div class="main-container">
+
+        <!-- 1. خدمات الأراضي -->
+        <section id="lands">
+            <div class="section-header">
+                <h3 class="section-title">خدمات الأراضي والفرز</h3>
+            </div>
+
+            <div class="visual-box">
+                <div id="globe-container"></div>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div>
+                        <div class="card-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+                        <h4 class="card-title">تثبيت الحدود والإفراز</h4>
+                        <p class="card-text">معاملات الفرز بين الشركاء وتثبيت الحدود الرسمية لدى دائرة الأراضي والمساحة.</p>
+                    </div>
+                    <a href="https://wa.me/962782173966?text=مرحباً،%20أرغب%20في%20طلب%20خدمة:%20تثبيت%20الحدود%20والإفراز" class="whatsapp-btn" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> طلب الخدمة
+                    </a>
+                </div>
+
+                <div class="service-card">
+                    <div>
+                        <div class="card-icon"><i class="fa-solid fa-file-signature"></i></div>
+                        <h4 class="card-title">نقل الملكية والأيلولة</h4>
+                        <p class="card-text">إتمام إجراءات البيع، الشراء، حصر الإرث، ومعاملات الأيلولة بسرعة ودقة.</p>
+                    </div>
+                    <a href="https://wa.me/962782173966?text=مرحباً،%20أرغب%20في%20طلب%20خدمة:%20نقل%20الملكية%20والأيلولة" class="whatsapp-btn" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> طلب الخدمة
+                    </a>
+                </div>
+
+                <div class="service-card">
+                    <div>
+                        <div class="card-icon"><i class="fa-solid fa-calculator"></i></div>
+                        <h4 class="card-title">اعتراضات القيمة الإدارية</h4>
+                        <p class="card-text">تقديم طلبات الاعتراض على التخمين والتسويات العقارية حسب الأصول.</p>
+                    </div>
+                    <a href="https://wa.me/962782173966?text=مرحباً،%20أرغب%20في%20طلب%20خدمة:%20اعتراضات%20القيمة%20الإدارية" class="whatsapp-btn" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> طلب الخدمة
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. موافقة التملك لغير الأردنيين -->
+        <section id="non-jordanian" style="margin-top: 4rem;">
+            <div class="section-header">
+                <h3 class="section-title">موافقة التملك لغير الأردنيين</h3>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div>
+                        <div class="card-icon"><i class="fa-solid fa-passport"></i></div>
+                        <h4 class="card-title">موافقات التملك العقاري</h4>
+                        <p class="card-text">استصدار موافقات التملك للمستثمرين والأخوة غير الأردنيين لدى الجهات المختصة.</p>
+                    </div>
+                    <a href="https://wa.me/962782173966?text=مرحباً،%20أرغب%20في%20طلب%20خدمة:%20موافقات%20التملك%20العقاري" class="whatsapp-btn" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> طلب الخدمة
+                    </a>
+                </div>
+
+                <div class="service-card">
+                    <div>
+                        <div class="card-icon"><i class="fa-solid fa-building-user"></i></div>
+                        <h4 class="card-title">تأسيس وتصويب الشركات</h4>
+                        <p class="card-text">تسجيل الغايات التجارية والأنشطة الاقتصادية لدى دائرة مراقبة الشركات.</p>
+                    </div>
+                    <a href="https://wa.me/962782173966?text=مرحباً،%20أرغب%20في%20طلب%20خدمة:%20تأسيس%20وتصويب%20الشركات" class="whatsapp-btn" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> طلب الخدمة
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. رخص المهن -->
+        <section id="licenses" style="margin-top: 4rem;">
+            <div class="section-header">
+                <h3 class="section-title">رخص المهن والتراخيص التجارية</h3>
+            </div>
+
+            <div class="visual-box">
+                <div class="office-demo" onclick="triggerStamp()">
+                    <i class="fa-solid fa-file-contract" style="font-size: 3rem; color: var(--primary-blue); margin-bottom: 1rem;"></i>
+                    <p style="color: var(--text-muted); margin-bottom: 1rem;">انقر لمعاينة ختم الموافقة الرسمي</p>
+                    <div id="stamp" class="stamp-badge">مُعتمَد - APPROVED</div>
+                </div>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div>
+                        <div class="card-icon"><i class="fa-solid fa-certificate"></i></div>
+                        <h4 class="card-title">إصدار وتجديد رخص المهن</h4>
+                        <p class="card-text">متابعة إجراءات التراخيص الجديدة والتجديد السنوي للمحلات والشركات.</p>
+                    </div>
+                    <a href="https://wa.me/962782173966?text=مرحباً،%20أرغب%20في%20طلب%20خدمة:%20إصدار%20وتجديد%20رخص%20المهن" class="whatsapp-btn" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> طلب الخدمة
+                    </a>
+                </div>
+
+                <div class="service-card">
+                    <div>
+                        <div class="card-icon"><i class="fa-solid fa-house-circle-check"></i></div>
+                        <h4 class="card-title">إذن الأشغال والتصاويب</h4>
+                        <p class="card-text">متابعة الكشوفات الحسية وإصدار أذونات الأشغال والموافقات التنظيمية.</p>
+                    </div>
+                    <a href="https://wa.me/962782173966?text=مرحباً،%20أرغب%20في%20طلب%20خدمة:%20إذن%20الأشغال%20والتصاويب" class="whatsapp-btn" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> طلب الخدمة
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>جميع الحقوق محفوظة © 2026 - إتقان للخدمات العقارية والإدارية</p>
+        <p class="footer-text">إربد - المملكة الأردنية الهاشمية | هاتف: 0782173966</p>
+    </footer>
+
+    <!-- Three.js Globe Script -->
+    <script>
+        const container = document.getElementById('globe-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+
+        // Sphere
+        const geometry = new THREE.SphereGeometry(2, 32, 32);
+        const material = new THREE.MeshPhongMaterial({
+            color: 0x183352,
+            wireframe: true,
+            emissive: 0xD4AF37,
+            emissiveIntensity: 0.2
+        });
+        const globe = new THREE.Mesh(geometry, material);
+        scene.add(globe);
+
+        // Light
+        const light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(5, 3, 5).normalize();
+        scene.add(light);
+
+        camera.position.z = 6;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            globe.rotation.y += 0.005;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Responsive Three.js
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+
+        // Stamp Interactive Function
+        function triggerStamp() {
+            const stamp = document.getElementById('stamp');
+            stamp.classList.add('active');
+            setTimeout(() => {
+                stamp.classList.remove('active');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
